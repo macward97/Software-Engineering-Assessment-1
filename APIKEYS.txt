@@ -1,0 +1,16 @@
+THE MOVIE DB
+
+API Key (v3 auth)
+
+9d72cb6c12e587c90e7bf6f48c617b44
+API Read Access Token (v4 auth)
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZDcyY2I2YzEyZTU4N2M5MGU3YmY2ZjQ4YzYxN2I0NCIsInN1YiI6IjViZWRkNzkwYzNhMzY4MThiYjAwNjcwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GLc3lSaVyL2BJHlnWvagoZjj9PqYvzGn_FV6EgfMXys
+Example API Request
+
+https://api.themoviedb.org/3/movie/550?api_key=9d72cb6c12e587c90e7bf6f48c617b44
+
+OMDB
+
+API KEY http://www.omdbapi.com/?i=tt3896198&apikey=e3fdfd9c OR e3fdfd9c
+
