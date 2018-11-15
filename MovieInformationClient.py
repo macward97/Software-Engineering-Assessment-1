@@ -26,25 +26,25 @@ def GenerateURLBasedOnUserSelection():
     #Allows the parsedURL to be used in other functions (outside this function)
     global parsedURL
     #User Website Selection (OMDb or The Movie DB)
-    USERWEBSITESELECTION = input("What website would you like to search?\n 1) Using OMDb \n 2) Using themoviedb\n")
+    userWebsiteSelection = input("What website would you like to search?\n 1) Using OMDb \n 2) Using themoviedb\n")
 
     #If Statement based on User Selection on Title or ID
 
-    if USERWEBSITESELECTION == "1" or USERWEBSITESELECTION == "title":
+    if userWebsiteSelection == "1" or userWebsiteSelection == "title":
         userSelectionForOMDbORthemoviedb = 0
-    elif USERWEBSITESELECTION == "2" or USERWEBSITESELECTION == "imdb id":
+    elif userWebsiteSelection == "2" or userWebsiteSelection == "imdb id":
         userSelectionForOMDbORthemoviedb = 1
 
     #User Choice for searching by Title or ID
         
-    USERTITLEORID = input("How would you like to search?\n 1) By Title\n 2) By IMDB ID or MOVIEDB ID\n")
+    userSelectionTitleOrID = input("How would you like to search?\n 1) By Title\n 2) By IMDB ID or MOVIEDB ID\n")
 
     #If Statement Which determines the values for the Title or Movie ID
 
-    if USERTITLEORID == "1" or USERTITLEORID == "title":
+    if userSelectionTitleOrID == "1" or userSelectionTitleOrID == "title":
         userSelectionForTitleOrID = 0
         movieInfo[0] = input("Please enter the title you want to search by (please use + instead of spaces e.g. the+godfather)\n")
-    elif USERTITLEORID == "2" or USERTITLEORID == "imdb id":
+    elif userSelectionTitleOrID == "2" or userSelectionTitleOrID == "imdb id":
         userSelectionForTitleOrID = 1
         movieInfo[1] = input("Please enter the IMDB ID or MOVIEDB ID you want to search by\n")
 
