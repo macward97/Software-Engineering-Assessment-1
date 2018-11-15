@@ -49,9 +49,9 @@ def GenerateURLBasedOnUserSelection():
         movieInfo[1] = input("Please enter the IMDB ID or MOVIEDB ID you want to search by\n")
 
     #Initialises array for OMDb URL prefixs
-    #?s= being Title of film and ?t= being IMDB ID
+    #?s= being Title of film and ?i= being IMDB ID
         
-    urlPrefixOMDb = ["?s=", "?t="]
+    urlPrefixOMDb = ["?s=", "?i="]
 
     #Initialises array for The Movie DB prefixs
 
