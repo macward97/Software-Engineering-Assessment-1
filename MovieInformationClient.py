@@ -2,6 +2,7 @@
 import json
 import requests
 import urllib.request, urllib.parse, urllib.error
+import webbrowser
 
 #API KEY OMDB: http://www.omdbapi.com/?i=tt3896198&apikey=e3fdfd9c OR e3fdfd9c
 #API KEY THE MOVIE DB: 9d72cb6c12e587c90e7bf6f48c617b44
@@ -42,7 +43,7 @@ def GenerateURLBasedOnUserSelection():
 
     if USERTITLEORID == "1" or USERTITLEORID == "title":
         userSelectionForTitleOrID = 0
-        movieInfo[0] = input("Please enter the title you want to search by\n")
+        movieInfo[0] = input("Please enter the title you want to search by (please use + instead of spaces e.g. the+godfather)\n")
     elif USERTITLEORID == "2" or USERTITLEORID == "imdb id":
         userSelectionForTitleOrID = 1
         movieInfo[1] = input("Please enter the IMDB ID or MOVIEDB ID you want to search by\n")
@@ -63,13 +64,14 @@ def GenerateURLBasedOnUserSelection():
     elif userSelectionForOMDbORthemoviedb == 1:
         parsedURL = URL[userSelectionForOMDbORthemoviedb]+urlPrefixTheMovieDB[userSelectionForTitleOrID]+"&apikey="+apiKeys[userSelectionForOMDbORthemoviedb]
 
-#Testing Function + Test Prints of parsedURL
+#Testing Function + Test Print of parsedURL + Open Web Browser To Confirm The JSON is correct
 
 GenerateURLBasedOnUserSelection()
 
 print(parsedURL)
 
-GenerateURLBasedOnUserSelection()
+input("Press ENTER to open link in web browser")
 
-print(parsedURL)
+webbrowser.open(parsedURL, new=2)
+
 
