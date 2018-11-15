@@ -20,8 +20,10 @@ movieInfo = ["placeholderTitle", "placeholderID"]
 
 URL = ["https://www.omdbapi.com/", "https://api.themoviedb.org/3"]
 
-#Function For the URL Generation
+#Function For the URL Generation, function can be called when/if a user wants information from another movie
 def GenerateURLBasedOnUserSelection():
+    #Allows the parsedURL to be used in other functions (outside this function)
+    global parsedURL
     #User Website Selection (OMDb or The Movie DB)
     USERWEBSITESELECTION = input("What website would you like to search?\n 1) Using OMDb \n 2) Using themoviedb\n")
 
@@ -61,12 +63,13 @@ def GenerateURLBasedOnUserSelection():
     elif userSelectionForOMDbORthemoviedb == 1:
         parsedURL = URL[userSelectionForOMDbORthemoviedb]+urlPrefixTheMovieDB[userSelectionForTitleOrID]+"&apikey="+apiKeys[userSelectionForOMDbORthemoviedb]
 
-    #Test Print URL
-        
-    print(parsedURL)
-
-#Test Function
+#Testing Function + Test Prints of parsedURL
 
 GenerateURLBasedOnUserSelection()
 
+print(parsedURL)
+
+GenerateURLBasedOnUserSelection()
+
+print(parsedURL)
 
