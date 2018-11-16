@@ -30,9 +30,9 @@ def GenerateURLBasedOnUserSelection():
 
     #If Statement based on User Selection on Title or ID
 
-    if userWebsiteSelection == "1" or userWebsiteSelection == "title":
+    if userWebsiteSelection == "1" or userWebsiteSelection == "omdb":
         userSelectionForOMDbORthemoviedb = 0
-    elif userWebsiteSelection == "2" or userWebsiteSelection == "imdb id":
+    elif userWebsiteSelection == "2" or userWebsiteSelection == "the movie database":
         userSelectionForOMDbORthemoviedb = 1
 
     #User Choice for searching by Title or ID
