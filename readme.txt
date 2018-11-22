@@ -1,1 +1,1 @@
-Inside the dist folder you will find a .exe executable of the python file (compiled using pyinstaller)
+Inside the dist folder you will find a .exe executable of the python file (compiled using pyinstaller). Meaning you can run the program without having Python installed or any dependencies.
