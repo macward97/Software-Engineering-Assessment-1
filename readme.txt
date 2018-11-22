@@ -1,0 +1,1 @@
+Inside the dist folder you will find a .exe executable of the python file (compiled using pyinstaller)

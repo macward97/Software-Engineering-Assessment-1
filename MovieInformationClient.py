@@ -8,6 +8,7 @@ import urllib.request, urllib.parse, urllib.error
 import webbrowser
 import http.client
 import imdb
+import sys
 
 #API Keys for OMDB and The Movie DB
 
@@ -57,9 +58,11 @@ def GenerateURLBasedOnUserSelection():
     #Allows the parsedURL to be used in other functions (outside this function)
     
     global parsedURL
-
-    print("Welcome to our Movie Information Client!\nDo you want to search or view your wish list?\n")
-    introductionSelection = input("1) Search for a film\n2) View your Wish List")
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    print("Welcome to our Movie Information Client!\nDo you want to search or view your wish list?")
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    introductionSelection = input("1) Search for a film\n2) View your Wish List\n3) Exit The Program\n")
+    
 
     #If Statement based on User Selection on Title or ID
 
@@ -69,6 +72,9 @@ def GenerateURLBasedOnUserSelection():
     elif introductionSelection == "2" or introductionSelection == "wish list":
         
         ViewUserWishList()
+    elif introductionSelection == "3" or introductionSelection == "exit":
+        
+        sys.exit()
         
     
     #User Website Selection (OMDb/IMDb or The Movie DB)
@@ -127,6 +133,10 @@ def JSONAssigner():
     #print (returnedJSON['Search', 'totalResults', 'Response']);
     for k,v in returnedJSON.items():
         print(k+":",v)
+
+    input("Press ENTER to return to Intro Screen")
+    GenerateURLBasedOnUserSelection()
+    
     #print(returnedJSON['Response']);
     #print("items");
     #print(returnedJSON.items())
