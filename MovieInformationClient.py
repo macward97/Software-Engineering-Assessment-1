@@ -206,6 +206,7 @@ def GenerateURLBasedOnUserSelection():
     #Allows the parsedURL to be used in other functions (outside this function)
     
     global parsedURL
+    global userSelectionForOMDbORthemoviedb
     parsedURL = None;
     print("||||||||||||||||||||||||||||||||||||||||||||");
     print("Welcome to our Movie Information Client!\nDo you want to search or view your wish list?")
@@ -275,7 +276,12 @@ def JSONAssigner():
 
     with urllib.request.urlopen(parsedURL) as url:
         returnedJSON = json.loads(url.read().decode())
-    GetMovieTitle()
+
+    if userSelectionForOMDbORthemoviedb == 0:
+        GetMovieTitle()
+    elif userSelectionForOMDbORthemoviedb == 1:
+        UserInputParseTitle()
+        
     
     for k,v in returnedJSON.items():
         print(k+":",v)
@@ -284,7 +290,6 @@ def JSONAssigner():
         jSONData.append({k:v})
         
         
-
     #print(json.dumps(jSONData))
 
     file = open("wishlistFilmsInfo/"+movieInfo[0]+".txt", "w+");
