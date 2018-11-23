@@ -240,7 +240,7 @@ def GenerateURLBasedOnUserSelection():
 
     #User Choice for searching by Title or ID
         
-    userSelectionTitleOrID = input("How would you like to search?\n 1) By Title\n 2) By IMDB ID or MOVIEDB ID\n")
+    userSelectionTitleOrID = input("How would you like to search?\n 1) By Title\n 2) By IMDB ID\n")
 
     #If Statement Which determines the values for the Title or Movie ID
 
@@ -251,7 +251,7 @@ def GenerateURLBasedOnUserSelection():
         userSelectionForTitleOrID = 1
     elif userSelectionTitleOrID == "2" or userSelectionTitleOrID == "imdb id":
         userSelectionForTitleOrID = 1
-        movieInfo[1] = input("Please enter the IMDB ID (e.g. tt0068646) or MOVIEDB ID (e.g. 238) you want to search by\n")
+        movieInfo[1] = input("Please enter the IMDB ID (e.g. tt0068646) you want to search by\n")
 
     #Initialises array for The Movie DB prefixs
 
