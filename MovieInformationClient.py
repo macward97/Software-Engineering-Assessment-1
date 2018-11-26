@@ -11,6 +11,7 @@ import http.client
 import imdb
 import sys
 import time
+import random
 
 #API Keys for OMDB and The Movie DB
 
@@ -31,6 +32,31 @@ URL = ["https://www.omdbapi.com/", "https://api.themoviedb.org/3"]
 #?s= prefix is now redundant because of the Title to IMDBID converter 
         
 urlPrefixOMDb = ["?s=", "?i="]
+
+#Function for generating random IMDB ID for random film selection
+
+def GenerateIMDBID():
+
+    imdbObject = imdb.IMDb()
+
+    for x in range(1):
+        movieInfo[1] = ("tt" + str(random.randint(0o000001,5734576)))
+
+    
+
+    UserInputParseTitle()
+    print (movieInfo[1]);
+
+    searchResult = imdbObject.search_movie(movieInfo[1])
+    
+    #For Loop which places the real formatted film title into an array to take out of wishlist.txt.
+    
+    for item in searchResult:
+           movieInfo[0] = str(item['title'])
+           movieInfo[1] = str("tt"+item.movieID)
+           break;
+
+    return;
 
 #Function for Parsing Title for Wishlist Films
 
@@ -53,14 +79,16 @@ def UserInputParseTitle():
 
     return;
 
-#Function for Aquiring Title when Searching for Film
+#Function for Acquiring Title when Searching for Film
 
 def GetMovieTitle():
 
     for k,v in returnedJSON.items():
         movieInfo[0] = (v);
-        print (movieInfo[0]);
+        #print (movieInfo[0]);
         break;
+
+    return;
 
 #Function for viewing WishList and Comments
 
@@ -214,7 +242,7 @@ def GenerateURLBasedOnUserSelection():
     introductionSelection = input("1) Search for a film\n2) View your Wish List\n3) Exit The Program\n")
     
 
-    #If Statement based on User Selection on Title or ID
+    #If Statement based on User Selection on Introduction Query
 
     if introductionSelection == "1" or introductionSelection == "search":
         print("FILM SEARCH");
@@ -231,7 +259,7 @@ def GenerateURLBasedOnUserSelection():
     
     userWebsiteSelection = input("What website would you like to search?\n 1) Using OMDb \n 2) Using themoviedb\n")
 
-    #If Statement based on User Selection on Title or ID
+    #If Statement based on User Selection on OMDb or The Movie DB
 
     if userWebsiteSelection == "1" or userWebsiteSelection == "omdb":
         userSelectionForOMDbORthemoviedb = 0
@@ -240,7 +268,7 @@ def GenerateURLBasedOnUserSelection():
 
     #User Choice for searching by Title or ID
         
-    userSelectionTitleOrID = input("How would you like to search?\n 1) By Title\n 2) By IMDB ID\n")
+    userSelectionTitleOrID = input("How would you like to search?\n 1) By Title\n 2) By IMDB ID\n 3) By Generated Random IMDbID\n")
 
     #If Statement Which determines the values for the Title or Movie ID
 
@@ -252,12 +280,18 @@ def GenerateURLBasedOnUserSelection():
     elif userSelectionTitleOrID == "2" or userSelectionTitleOrID == "imdb id":
         userSelectionForTitleOrID = 1
         movieInfo[1] = input("Please enter the IMDB ID (e.g. tt0068646) you want to search by\n")
+    elif userSelectionTitleOrID == "3" or userSelectionTitleOrID == "random":
+        userSelectionForTitleOrID = 1
+        userSelectionForOMDbORthemoviedb = 0
+        GenerateIMDBID()
+        
+        
 
     #Initialises array for The Movie DB prefixs
 
     urlPrefixTheMovieDB = ["/search/movie?api_key="+apiKeys[1]+"&query="+movieInfo[userSelectionForTitleOrID], "/movie/"+movieInfo[userSelectionForTitleOrID]+"?api_key="+apiKeys[1]]
 
-    #If Statement That Parses the URLs (based on User Selection) Using The above variables and array indices 
+    #If Statement That Parses the URLs (based on User Selection) Using The above variables and array indices
 
     if userSelectionForOMDbORthemoviedb == 0:
         parsedURL = URL[userSelectionForOMDbORthemoviedb]+urlPrefixOMDb[userSelectionForTitleOrID]+movieInfo[userSelectionForTitleOrID]+"&apikey="+apiKeys[userSelectionForOMDbORthemoviedb]
@@ -265,14 +299,27 @@ def GenerateURLBasedOnUserSelection():
         parsedURL = URL[userSelectionForOMDbORthemoviedb]+urlPrefixTheMovieDB[userSelectionForTitleOrID]+"&apikey="+apiKeys[userSelectionForOMDbORthemoviedb]
 
     JSONAssigner()
+    
+    
+def Test():
+    
+
+    while movieInfo[0] == "#DUPE#" or movieInfo[1] == "#DUPE#" or movieInfo[1] == "False" or movieInfo[0] == "False":
+        print("Error with RANDOM ID generation, returning to main menu")
+        GenerateURLBasedOnUserSelection()
+        print (movieInfo[0]);
+        if movieInfo[0] != "#DUPE#" or movieInfo[1] != "#DUPE#" or movieInfo[1] != "False" or movieInfo[0] != "False":
+            JSONAssigner()
+            
+
+        
+    JSONAssigner()
 
 #Function for Parsing JSON from URL and then Printing it and writing it to a text file. Also queries user on wanting to add film to wishlist
 
 def JSONAssigner():
 
-    global returnedJSON;
-
-    
+    global returnedJSON;    
 
     with urllib.request.urlopen(parsedURL) as url:
         returnedJSON = json.loads(url.read().decode())
@@ -281,6 +328,9 @@ def JSONAssigner():
         GetMovieTitle()
     elif userSelectionForOMDbORthemoviedb == 1:
         UserInputParseTitle()
+
+    if movieInfo[0] == "#DUPE#" or movieInfo[1] == "#DUPE#" or movieInfo[1] == "False" or movieInfo[0] == "False":
+        Test()
         
     
     for k,v in returnedJSON.items():
@@ -288,6 +338,15 @@ def JSONAssigner():
 
     for k, v in returnedJSON.items():
         jSONData.append({k:v})
+
+    #if movieInfo[0] == "#DUPE#" or movieInfo[1] == "#DUPE#" or movieInfo[1] == "False" or movieInfo[0] == "False":
+            #UserInputParseTitle()
+            #Test()
+    else:
+        print("ID Tested")
+
+
+    
         
         
     #print(json.dumps(jSONData))
