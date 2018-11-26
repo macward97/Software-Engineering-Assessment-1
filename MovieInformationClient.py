@@ -47,14 +47,14 @@ def GenerateIMDBID():
     UserInputParseTitle()
     print (movieInfo[1]);
 
-    searchResult = imdbObject.search_movie(movieInfo[1])
+    #searchResult = imdbObject.search_movie(movieInfo[1])
     
     #For Loop which places the real formatted film title into an array to take out of wishlist.txt.
     
-    for item in searchResult:
-           movieInfo[0] = str(item['title'])
-           movieInfo[1] = str("tt"+item.movieID)
-           break;
+    #for item in searchResult:
+           #movieInfo[0] = str(item['title'])
+           #movieInfo[1] = str("tt"+item.movieID)
+           #break;
 
     return;
 
