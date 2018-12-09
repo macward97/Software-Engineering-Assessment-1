@@ -1,7 +1,7 @@
-#API KEY OMDB: http://www.omdbapi.com/?i=tt3896198&apikey=e3fdfd9c OR e3fdfd9c
-#API KEY THE MOVIE DB: 9d72cb6c12e587c90e7bf6f48c617b44
-#Example URLs - OMDB: http://www.omdbapi.com/?i=tt0113375&apikey=e3fdfd9c AND themovieDB: https://api.themoviedb.org/3/movie/550?api_key=9d72cb6c12e587c90e7bf6f48c617b44
-#Import Necessary Libraries
+#API KEY OMDB: http://www.omdbapi.com/?i=tt3896198&apikey=e3fdfd9c OR e3fdfd9c.
+#API KEY THE MOVIE DB: 9d72cb6c12e587c90e7bf6f48c617b44.
+#Example URLs - OMDB: http://www.omdbapi.com/?i=tt0113375&apikey=e3fdfd9c AND themovieDB: https://api.themoviedb.org/3/movie/550?api_key=9d72cb6c12e587c90e7bf6f48c617b44.
+#Import Necessary Libraries.
 
 import json
 import requests
@@ -13,27 +13,27 @@ import sys
 import time
 import random
 
-#API Keys for OMDB and The Movie DB
+#API Keys for OMDB and The Movie DB.
 
 apiKeys = ["e3fdfd9c", "9d72cb6c12e587c90e7bf6f48c617b44"]
 
-#Initialise array for movie title or id
+#Initialise array for movie title or id.
 
 movieInfo = ["placeholderTitle", "placeholderID", ""]
 
 jSONData = []
 
-#Initialise array for URL for omdb or moviedb
+#Initialise array for URL for omdb or moviedb.
 
 URL = ["https://www.omdbapi.com/", "https://api.themoviedb.org/3"]
 
-#Initialises array for OMDb URL prefixs
-#?s= being Title of film and ?i= being IMDB ID
-#?s= prefix is now redundant because of the Title to IMDBID converter 
+#Initialises array for OMDb URL prefixs.
+#?s= being Title of film and ?i= being IMDB ID.
+#?s= prefix is now redundant because of the Title to IMDBID converter.
         
 urlPrefixOMDb = ["?s=", "?i="]
 
-#Function for generating random IMDB ID for random film selection
+#Function for generating random IMDB ID for random film selection.
 
 def GenerateIMDBID():
 
@@ -58,7 +58,7 @@ def GenerateIMDBID():
 
     return;
 
-#Function for Parsing Title for Wishlist Films
+#Function for Parsing Title for Wishlist Films.
 
 def UserInputParseTitle():
 
