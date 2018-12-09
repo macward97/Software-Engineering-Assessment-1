@@ -8,6 +8,7 @@ import urllib.request, urllib.parse, urllib.error
 import webbrowser
 import http.client
 import imdb
+import sys
 
 #API Keys for OMDB and The Movie DB
 
@@ -21,7 +22,19 @@ movieInfo = ["placeholderTitle", "placeholderID"]
 
 URL = ["https://www.omdbapi.com/", "https://api.themoviedb.org/3"]
 
+
+def ViewUserWishList():
+
+    print("test");
+
+    GenerateURLBasedOnUserSelection()
+
+def AddToWishList():
+
+    print("test");
+
 #Function for Converting User Specific Title into the First Result's IMDB ID (for better accuracy when extracting data). This function uses IMDBpy functions
+    
 def ConvertTitleToIMDBID():
 
     #Initialise IMDB object for accessing IMDB's database (hence no need for API Key for this specific instance)
@@ -45,6 +58,24 @@ def GenerateURLBasedOnUserSelection():
     #Allows the parsedURL to be used in other functions (outside this function)
     
     global parsedURL
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    print("Welcome to our Movie Information Client!\nDo you want to search or view your wish list?")
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    introductionSelection = input("1) Search for a film\n2) View your Wish List\n3) Exit The Program\n")
+    
+
+    #If Statement based on User Selection on Title or ID
+
+    if introductionSelection == "1" or introductionSelection == "search":
+        print("test")
+        
+    elif introductionSelection == "2" or introductionSelection == "wish list":
+        
+        ViewUserWishList()
+    elif introductionSelection == "3" or introductionSelection == "exit":
+        
+        sys.exit()
+        
     
     #User Website Selection (OMDb/IMDb or The Movie DB)
     
@@ -102,6 +133,10 @@ def JSONAssigner():
     #print (returnedJSON['Search', 'totalResults', 'Response']);
     for k,v in returnedJSON.items():
         print(k+":",v)
+
+    input("Press ENTER to return to Intro Screen")
+    GenerateURLBasedOnUserSelection()
+    
     #print(returnedJSON['Response']);
     #print("items");
     #print(returnedJSON.items())
@@ -114,15 +149,16 @@ def JSONAssigner():
 
     #print (returnedJSON["imdbID"]);
 
-#def JSONQuery():
 
-    
 
-#Testing Function + Test Print of parsedURL + Open Web Browser To Confirm The JSON is correct
+
+#Calling Functions
 
 GenerateURLBasedOnUserSelection()
 
-JSONAssigner()
+JSONAssigner()    
+
+#Testing Function + Test Print of parsedURL + Open Web Browser To Confirm The JSON is correct
 
 #print(parsedURL)
 
