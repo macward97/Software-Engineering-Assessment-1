@@ -1,7 +1,8 @@
 #API KEY OMDB: http://www.omdbapi.com/?i=tt3896198&apikey=e3fdfd9c OR e3fdfd9c
 #API KEY THE MOVIE DB: 9d72cb6c12e587c90e7bf6f48c617b44
 #Example URLs - OMDB: http://www.omdbapi.com/?i=tt0113375&apikey=e3fdfd9c AND themovieDB: https://api.themoviedb.org/3/movie/550?api_key=9d72cb6c12e587c90e7bf6f48c617b44
-#Import Necessary Libraries 
+#Import Necessary Libraries
+
 import json
 import requests
 import urllib.request, urllib.parse, urllib.error
@@ -9,6 +10,7 @@ import webbrowser
 import http.client
 import imdb
 import sys
+import time
 
 #API Keys for OMDB and The Movie DB
 
@@ -16,22 +18,166 @@ apiKeys = ["e3fdfd9c", "9d72cb6c12e587c90e7bf6f48c617b44"]
 
 #Initialise array for movie title or id
 
-movieInfo = ["placeholderTitle", "placeholderID"]
+movieInfo = ["placeholderTitle", "placeholderID", ""]
+
+jSONData = []
 
 #Initialise array for URL for omdb or moviedb
 
 URL = ["https://www.omdbapi.com/", "https://api.themoviedb.org/3"]
 
+#Initialises array for OMDb URL prefixs
+#?s= being Title of film and ?i= being IMDB ID
+#?s= prefix is now redundant because of the Title to IMDBID converter 
+        
+urlPrefixOMDb = ["?s=", "?i="]
+
+#Function for Parsing Title for Wishlist Films
+
+def UserInputParseTitle():
+
+    #Initialise IMDB object for accessing IMDB's database (hence no need for API Key for this specific instance)
+    
+    imdbObject = imdb.IMDb()
+    
+    #Searches Using the title inputted by user
+    
+    searchResult = imdbObject.search_movie(movieInfo[0])
+    
+    #For Loop which places the real formatted film title into an array to take out of wishlist.txt.
+    
+    for item in searchResult:
+           movieInfo[0] = str(item['title'])
+           movieInfo[2] = str(item['year'])
+           break;
+
+    return;
+
+#Function for Aquiring Title when Searching for Film
+
+def GetMovieTitle():
+
+    for k,v in returnedJSON.items():
+        movieInfo[0] = (v);
+        print (movieInfo[0]);
+        break;
+
+#Function for viewing WishList and Comments
 
 def ViewUserWishList():
 
-    print("test");
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    print("What would you like to do with your wishlist?")
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    wishlistSelection = input("1) View your list of films\n2) Remove a specific film\n3) Clear the entire wishlist\n4) Comments Facility\n5) Go back to Intro Screen\n")
+
+    if wishlistSelection == "1" or wishlistSelection == "view":
+
+        #Opens Up wishlist.txt and reads it into a variable
+        
+        file = open("wishlist.txt","r")
+        data = file.read();
+        print (data);
+        file.close();
+
+        ViewUserWishList()
+        
+    elif wishlistSelection == "2" or wishlistSelection == "remove":
+
+        #Using the Title inputted, the real title will be returned from UserInputParseTitle()
+        #Using the lines function, if a line has the inputted title in the wishlist.txt file, that line will be removed thus removing that film entry
+
+        movieInfo[0] = input("Please type in the film you wish to remove from the wishlist\n")
+        UserInputParseTitle()
+        print (movieInfo[0]);
+
+        file = open("wishlist.txt","r+")
+        d = file.readlines()
+        file.seek(0)
+        for i in d:
+            if i != movieInfo[0]+"\n":
+                file.write(i)
+        file.truncate()
+        file.close()
+
+        ViewUserWishList()
+
+    elif wishlistSelection == "3" or wishlistSelection == "clear":
+
+        #Clears text file by overwriting it with blank file
+
+        open('wishlist.txt', 'w').close()
+        print("Wish List is now cleared");
+
+        ViewUserWishList()
+
+    elif wishlistSelection == "4" or wishlistSelection == "comments":
+
+        #Comments Facility
+
+        print("||||||||||||||||||||||||||||||||||||||||||||");
+        print("What would you like to do with comments?")
+        print("||||||||||||||||||||||||||||||||||||||||||||");
+        
+        commentsSelection = input("1) Make a comment on a film\n2) View your comments\n3) Clear all comments\n")
+
+        if commentsSelection == "1" or commentsSelection == "make":
+
+            #Writes the comment with the user specified title and release date as well as the name of the user into comments.txt
+
+            movieInfo[0] = input("Please type in the film you wish to make a comment on\n")
+            UserInputParseTitle()
+            comment = input("Please type in the comment you wish to make on this film\n");
+            name = input("Please type in your name\n");
+
+            with open("comments.txt", "a") as file:
+               file.write(movieInfo[0]+" ("+movieInfo[2]+")"+" - "+"User "+name+" said: "+"'"+comment+"'"+"\n")
+               file.close()
+
+            ViewUserWishList
+        
+        elif commentsSelection == "2" or commentsSelection == "view":
+
+            #Opens Up comments.txt and reads it into a variable
+        
+            file = open("comments.txt","r")
+            data = file.read();
+            print (data);
+            file.close();
+
+            ViewUserWishList
+
+        elif commentsSelection == "3" or commentsSelection == "clear":
+
+            #Clears text file by overwriting it with blank file
+        
+            open('comments.txt', 'w').close()
+            print("Comments are now cleared");
+
+            ViewUserWishList
+            
+
+    elif wishlistSelection == "5" or wishlistSelection == "back":
+
+        #Goes back to start of program
+
+        GenerateURLBasedOnUserSelection()
 
     GenerateURLBasedOnUserSelection()
 
+#Function for Adding Searched Film to WishList
+
 def AddToWishList():
 
-    print("test");
+    #Writes title of film into wishlist.txt and goes to start of program
+
+    print("Film is now added into your wishlist which you can view by going back to the intro screen");
+
+    with open("wishlist.txt", "a") as file:
+       file.write(movieInfo[0]+"\n")
+       file.close()
+
+    GenerateURLBasedOnUserSelection()
 
 #Function for Converting User Specific Title into the First Result's IMDB ID (for better accuracy when extracting data). This function uses IMDBpy functions
     
@@ -51,13 +197,16 @@ def ConvertTitleToIMDBID():
            movieInfo[1] = str("tt"+item.movieID)
            break;
 
-#Function For the URL Generation/Parsing, function can be called when/if a user wants information from another movie
+    return;
+
+#Main Function For the URL Generation/Parsing
         
 def GenerateURLBasedOnUserSelection():
 
     #Allows the parsedURL to be used in other functions (outside this function)
     
     global parsedURL
+    parsedURL = None;
     print("||||||||||||||||||||||||||||||||||||||||||||");
     print("Welcome to our Movie Information Client!\nDo you want to search or view your wish list?")
     print("||||||||||||||||||||||||||||||||||||||||||||");
@@ -67,7 +216,7 @@ def GenerateURLBasedOnUserSelection():
     #If Statement based on User Selection on Title or ID
 
     if introductionSelection == "1" or introductionSelection == "search":
-        print("test")
+        print("FILM SEARCH");
         
     elif introductionSelection == "2" or introductionSelection == "wish list":
         
@@ -97,17 +246,11 @@ def GenerateURLBasedOnUserSelection():
     if userSelectionTitleOrID == "1" or userSelectionTitleOrID == "title":
         movieInfo[0] = input("Please enter the title you want to search by (e.g. The Godfather) \n")
         #When Title is converted to ID (ConvertTitleToIMDBID()), the URL parsing will use the ID instead of the title
-        userSelectionForTitleOrID = 1
         ConvertTitleToIMDBID()
+        userSelectionForTitleOrID = 1
     elif userSelectionTitleOrID == "2" or userSelectionTitleOrID == "imdb id":
         userSelectionForTitleOrID = 1
         movieInfo[1] = input("Please enter the IMDB ID (e.g. tt0068646) or MOVIEDB ID (e.g. 238) you want to search by\n")
-
-    #Initialises array for OMDb URL prefixs
-    #?s= being Title of film and ?i= being IMDB ID
-    #?s= prefix is now redundant because of the Title to IMDBID converter 
-        
-    urlPrefixOMDb = ["?s=", "?i="]
 
     #Initialises array for The Movie DB prefixs
 
@@ -120,50 +263,50 @@ def GenerateURLBasedOnUserSelection():
     elif userSelectionForOMDbORthemoviedb == 1:
         parsedURL = URL[userSelectionForOMDbORthemoviedb]+urlPrefixTheMovieDB[userSelectionForTitleOrID]+"&apikey="+apiKeys[userSelectionForOMDbORthemoviedb]
 
-    #Print JSON
+    JSONAssigner()
 
+#Function for Parsing JSON from URL and then Printing it and writing it to a text file. Also queries user on wanting to add film to wishlist
 
 def JSONAssigner():
 
     global returnedJSON;
 
+    
+
     with urllib.request.urlopen(parsedURL) as url:
         returnedJSON = json.loads(url.read().decode())
-
-    #print (returnedJSON['Search', 'totalResults', 'Response']);
+    GetMovieTitle()
+    
     for k,v in returnedJSON.items():
         print(k+":",v)
 
-    input("Press ENTER to return to Intro Screen")
-    GenerateURLBasedOnUserSelection()
+    for k, v in returnedJSON.items():
+        jSONData.append({k:v})
+        
+        
+
+    #print(json.dumps(jSONData))
+
+    file = open("wishlistFilmsInfo/"+movieInfo[0]+".txt", "w+");
+
+    file = file.write(str(jSONData));
+
+    #file.close();
     
-    #print(returnedJSON['Response']);
-    #print("items");
-    #print(returnedJSON.items())
-    #print("keys");
-    #print(returnedJSON.keys())
-    #print("values");
-    #print(returnedJSON.values())
-
-    #print (returnedJSON);
-
-    #print (returnedJSON["imdbID"]);
-
-
-
-
-#Calling Functions
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    print("Do you want to add this film to your wishlist?");
+    print("||||||||||||||||||||||||||||||||||||||||||||");
+    addToWishList = input("1) No\n2) Yes\n")
+    
+    
+    if addToWishList == "1" or addToWishList == "no":
+        GenerateURLBasedOnUserSelection()
+    elif addToWishList == "2" or addToWishList == "yes":
+        AddToWishList()
+        
+#Called Function when Program Starts
 
 GenerateURLBasedOnUserSelection()
 
-JSONAssigner()    
-
-#Testing Function + Test Print of parsedURL + Open Web Browser To Confirm The JSON is correct
-
-#print(parsedURL)
-
-#input("Press ENTER to open link in web browser")
-
-#webbrowser.open(parsedURL, new=2)
 
 

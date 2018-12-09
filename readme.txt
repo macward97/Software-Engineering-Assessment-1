@@ -1,1 +1,1 @@
-Inside the dist folder you will find a .exe executable of the python file (compiled using pyinstaller)
+The compiled exe of the .py file is MovieInformationClient.exe in the ROOT folder, do not use the one inside DIST. Use that if you don't need or have Python or any dependencies.
