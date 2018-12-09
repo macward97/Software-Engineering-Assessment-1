@@ -14,3 +14,9 @@ OMDB
 
 API KEY http://www.omdbapi.com/?i=tt3896198&apikey=e3fdfd9c OR e3fdfd9c
 
+THE MOVIE DB
+
+API KEY: 9d72cb6c12e587c90e7bf6f48c617b44
+
+Example URL: themovieDB: https://api.themoviedb.org/3/movie/550?api_key=9d72cb6c12e587c90e7bf6f48c617b44
+
