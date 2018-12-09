@@ -307,7 +307,7 @@ def Test():
     while movieInfo[0] == "#DUPE#" or movieInfo[1] == "#DUPE#" or movieInfo[1] == "False" or movieInfo[0] == "False":
         print("Error with RANDOM ID generation, returning to main menu")
         GenerateURLBasedOnUserSelection()
-        print (movieInfo[0]);
+        JSONAssigner();
         if movieInfo[0] != "#DUPE#" or movieInfo[1] != "#DUPE#" or movieInfo[1] != "False" or movieInfo[0] != "False":
             JSONAssigner()
             
