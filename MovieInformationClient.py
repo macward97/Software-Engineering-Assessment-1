@@ -360,13 +360,13 @@ def JSONAssigner():
     print("||||||||||||||||||||||||||||||||||||||||||||");
     print("Do you want to add this film to your wishlist?");
     print("||||||||||||||||||||||||||||||||||||||||||||");
-    addToWishList = input("1) No\n2) Yes\n")
+    addToWishList = input("y) Yes\nn) No\n")
     
     
-    if addToWishList == "1" or addToWishList == "no":
-        GenerateURLBasedOnUserSelection()
-    elif addToWishList == "2" or addToWishList == "yes":
+    if addToWishList == "y" or addToWishList == "yes":
         AddToWishList()
+    elif addToWishList == "n" or addToWishList == "no":
+		GenerateURLBasedOnUserSelection()
         
 #Called Function when Program Starts
 
